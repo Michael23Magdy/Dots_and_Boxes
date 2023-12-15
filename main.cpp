@@ -11,23 +11,15 @@ int main()
 {
 
     // Main window
-    sf::RenderWindow window(sf::VideoMode(1000, 770), "Dots and boxes", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(950, 770), "Dots and boxes", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(30) ;
 
     Board gameBoard(window,boxesCnt) ;
     gameBoard.initializeBoard() ;
 
-    int playerScores[2];
+    int playerScores[2] = {0,0};
     bool isPlayer2Turn = false;
     bool isBoxClosed = false;
-
-    sf::Font font ;
-    sf::Text playerOneScoreText ;
-    font.loadFromFile("includes/fonts/garamond.ttf");
-
-    playerOneScoreText.setFont(font);
-    playerOneScoreText.setString("Score : ") ;
-    playerOneScoreText.setPosition(sf::Vector2f()) ;
 
     while (window.isOpen())
     {
@@ -97,6 +89,10 @@ int main()
                                     else
                                     {
                                         isBoxClosed = 0;
+                                        if (!isPlayer2Turn)
+                                            gameBoard.text.PlayerOneScoreText.setString("Score: " + std::to_string(playerScores[0]));
+                                        else
+                                            gameBoard.text.PlayerTwoScoreText.setString("Score: " + std::to_string(playerScores[1]));
                                     }
                                 }
                             }
@@ -154,6 +150,10 @@ int main()
                                     else
                                     {
                                         isBoxClosed = 0;
+                                        if (!isPlayer2Turn)
+                                            gameBoard.text.PlayerOneScoreText.setString("Score: " + std::to_string(playerScores[0]));
+                                        else
+                                            gameBoard.text.PlayerTwoScoreText.setString("Score: " + std::to_string(playerScores[1]));
                                     }
                                 }
                             }
@@ -163,11 +163,15 @@ int main()
                     window.draw(gameBoard.verticalLineProperties[vertLinePos].shape);
                 }
 
+            window.draw(gameBoard.text.PlayerOneScoreText);
+            window.draw(gameBoard.text.PlayerOneName);
+
+            window.draw(gameBoard.text.PlayerTwoScoreText);
+            window.draw(gameBoard.text.PlayerTwoName);
         }
             for (int i = 0; i < dotsCnt; i++)
                 for (int j = 0; j < dotsCnt; j++)
                     window.draw(gameBoard.dotsProperties[i * dotsCnt + j]);
-
             window.display();
     }
     return EXIT_SUCCESS;

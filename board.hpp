@@ -1,20 +1,20 @@
 #include"colors.hpp"
 #include"shapes.hpp"
+#include"board_text.hpp"
 #include<vector>
 #ifndef BOARD_H_
 #define BOARD_H_
-static const sf::Font font ;
 struct Board
 {
     sf::RenderWindow &window ;
     int boxesCnt ;
     int dotsCnt ;
     float dotsDistance ;
-    // sf::Font font ;
-    // sf::Text playerOneScoreText ;
 
     static const float dotsRadius ;
     static const float lineThickness ;
+
+    Text text ;
 
     std::vector<Line> horizontaLineProperties;
     std::vector<Line> verticalLineProperties;

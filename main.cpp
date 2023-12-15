@@ -49,17 +49,17 @@ int main()
                     if (!isHorizontalLineDrawn[horizontalLinePos])
                     {
 
-                        if (gameBoard.horizontaLineProperties[horizontalLinePos].getGlobalBounds().contains(xPos, yPos))
-                            gameBoard.horizontaLineProperties[horizontalLinePos].setFillColor(playersLinesColours[isPlayer2Turn]);
+                        if (gameBoard.horizontaLineProperties[horizontalLinePos].contains(xPos, yPos))
+                            gameBoard.horizontaLineProperties[horizontalLinePos].setColour(playersLinesColours[isPlayer2Turn]);
                         else
-                            gameBoard.horizontaLineProperties[horizontalLinePos].setFillColor(blackColour);
+                            gameBoard.horizontaLineProperties[horizontalLinePos].setColour(blackColour);
 
                         if (event.type == sf::Event::MouseButtonPressed)
                         {
                             if (event.mouseButton.button == sf::Mouse::Left)
                             {
 
-                                if (gameBoard.horizontaLineProperties[horizontalLinePos].getGlobalBounds().contains(xPos, yPos))
+                                if (gameBoard.horizontaLineProperties[horizontalLinePos].contains(xPos, yPos))
                                 {
                                     isHorizontalLineDrawn[horizontalLinePos] = 1;
                                     if (horizontalLinePos / boxesCnt)
@@ -96,7 +96,7 @@ int main()
                         }
                     }
 
-                    window.draw(gameBoard.horizontaLineProperties[i * boxesCnt + j]);
+                    window.draw(gameBoard.horizontaLineProperties[i * boxesCnt + j].shape);
                 }
 
             for (int i = 0; i < boxesCnt; i++)
@@ -106,17 +106,17 @@ int main()
                     if (!isVerticalLineDrawn[vertLinePos])
                     {
 
-                        if (gameBoard.verticalLineProperties[vertLinePos].getGlobalBounds().contains(xPos, yPos))
-                            gameBoard.verticalLineProperties[vertLinePos].setFillColor(playersLinesColours[isPlayer2Turn]);
+                        if (gameBoard.verticalLineProperties[vertLinePos].contains(xPos, yPos))
+                            gameBoard.verticalLineProperties[vertLinePos].setColour(playersLinesColours[isPlayer2Turn]);
                         else
-                            gameBoard.verticalLineProperties[vertLinePos].setFillColor(blackColour);
+                            gameBoard.verticalLineProperties[vertLinePos].setColour(blackColour);
 
                         if (event.type == sf::Event::MouseButtonPressed)
                         {
                             if (event.mouseButton.button == sf::Mouse::Left)
                             {
 
-                                if (gameBoard.verticalLineProperties[vertLinePos].getGlobalBounds().contains(xPos, yPos))
+                                if (gameBoard.verticalLineProperties[vertLinePos].contains(xPos, yPos))
                                 {
                                     isVerticalLineDrawn[vertLinePos] = 1;
 
@@ -153,7 +153,7 @@ int main()
                         }
                     }
 
-                    window.draw(gameBoard.verticalLineProperties[vertLinePos]);
+                    window.draw(gameBoard.verticalLineProperties[vertLinePos].shape);
                 }
 
         }

@@ -29,10 +29,10 @@ void Board::setHorizontalLinesProberties(){
     {
         for (int j = 0; j < boxesCnt; j++)
         {
-            horizontaLineProperties[i * boxesCnt + j].setPosition(sf::Vector2f(55 + 2 * dotsRadius + j * dotsDistance,
-                                                             60 - lineThickness / 2 + dotsRadius + i * dotsDistance));
-            horizontaLineProperties[i * boxesCnt + j].setFillColor(blackColour);
-            horizontaLineProperties[i * boxesCnt + j].setSize(sf::Vector2f(dotsDistance - 2 * dotsRadius + 10, lineThickness));
+            horizontaLineProperties[i * boxesCnt + j].setPosition(55 + 2 * dotsRadius + j * dotsDistance,
+                                                             60 - lineThickness / 2 + dotsRadius + i * dotsDistance);
+            horizontaLineProperties[i * boxesCnt + j].setColour(blackColour);
+            horizontaLineProperties[i * boxesCnt + j].setSize(dotsDistance - 2 * dotsRadius + 10, lineThickness);
         }
     }
 }
@@ -41,11 +41,11 @@ void Board::setVerticalLinesProberties(){
     {
         for (int j = 0; j < boxesCnt + 1; j++)
         {
-            verticalLineProperties[i * (boxesCnt + 1) + j].setPosition(sf::Vector2f(60 + lineThickness / 2 + dotsRadius + j * dotsDistance,
-                                                                   55 + 2 * dotsRadius + i * dotsDistance));
-            verticalLineProperties[i * (boxesCnt + 1) + j].setFillColor(blackColour);
-            verticalLineProperties[i * (boxesCnt + 1) + j].setSize(sf::Vector2f(dotsDistance - 2 * dotsRadius + 10, lineThickness));
-            verticalLineProperties[i * (boxesCnt + 1) + j].rotate(90.f);
+            verticalLineProperties[i*dotsCnt + j].setPosition(60 + lineThickness / 2 + dotsRadius + j * dotsDistance,
+                                                                   55 + 2 * dotsRadius + i * dotsDistance);
+            verticalLineProperties[i*dotsCnt + j].setColour(blackColour);
+            verticalLineProperties[i*dotsCnt + j].setSize(dotsDistance - 2 * dotsRadius + 10, lineThickness);
+            verticalLineProperties[i*dotsCnt + j].shape.rotate(90.f);
         }
     }
 }

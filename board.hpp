@@ -1,4 +1,5 @@
 #include"colors.hpp"
+#include"shapes.hpp"
 #include<vector>
 #ifndef BOARD_H_
 #define BOARD_H_
@@ -13,8 +14,8 @@ struct Board
     static const float dotsRadius ;
     static const float lineThickness ;
 
-    std::vector<sf::RectangleShape> horizontaLineProperties;
-    std::vector<sf::RectangleShape> verticalLineProperties;
+    std::vector<Line> horizontaLineProperties;
+    std::vector<Line> verticalLineProperties;
     std::vector<sf::RectangleShape> boxesProperties;
     std::vector<sf::CircleShape> dotsProperties;
 

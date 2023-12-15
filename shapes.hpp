@@ -8,10 +8,10 @@ struct Line {
 
     Line(int &xCor,int &yCor,int &xLength,int &yLength) ;
 
-    bool contains(int &x,int &y) ;
-    void setSize(int &xLength,int &yLength) ;
+    bool contains(const int &x,const int &y) ;
+    void setSize(const int &xLength,const int &yLength) ;
     void setColour(sf::Color &colour) ;
-    void setPosition(int &xCor,int &yCor) ;
+    void setPosition(const int &xCor,const int &yCor) ;
 
 } ;
 #endif

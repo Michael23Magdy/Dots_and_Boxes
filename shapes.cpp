@@ -1,9 +1,9 @@
 #include"shapes.hpp"
 
 
-Line::Line(int &xCor,int &yCor,int &xLength,int &yLength){
-    setPosition(xCor,yCor) ;
-    setSize(xLength,yLength);
+Line::Line(){ //int &xCor,int &yCor,int &xLength,int &yLength
+    // setPosition(xCor,yCor) ;
+    // setSize(xLength,yLength);
     isDrawn = false ;
 }
 

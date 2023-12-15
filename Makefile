@@ -17,7 +17,7 @@ LIB_LIST += -lsfml-system
 
 INCLUDED_FILES = colors.cpp
 INCLUDED_FILES += board.cpp
-
+INCLUDED_FILES += shapes.cpp
 #CXX flags
 CXX_FLAGS := -c
 CXX_FLAGS += -w

@@ -17,10 +17,11 @@ int main()
     Board gameBoard(window,boxesCnt) ;
     gameBoard.initializeBoard() ;
 
-    bool isHorizontalLineDrawn[boxesCnt * (boxesCnt + 1)] = {0}, isVerticalLineDrawn[boxesCnt * (boxesCnt + 1)] = {0};
     int playerScores[2];
     bool isPlayer2Turn = false;
     bool isBoxClosed = false;
+
+
 
     while (window.isOpen())
     {
@@ -46,7 +47,7 @@ int main()
                 {
                     int horizontalLinePos = i * boxesCnt + j;
 
-                    if (!isHorizontalLineDrawn[horizontalLinePos])
+                    if (!gameBoard.horizontaLineProperties[horizontalLinePos].isDrawn)
                     {
 
                         if (gameBoard.horizontaLineProperties[horizontalLinePos].contains(xPos, yPos))
@@ -61,12 +62,12 @@ int main()
 
                                 if (gameBoard.horizontaLineProperties[horizontalLinePos].contains(xPos, yPos))
                                 {
-                                    isHorizontalLineDrawn[horizontalLinePos] = 1;
+                                    gameBoard.horizontaLineProperties[horizontalLinePos].isDrawn = 1;
                                     if (horizontalLinePos / boxesCnt)
                                     {
-                                        if (isHorizontalLineDrawn[horizontalLinePos - boxesCnt] &&
-                                            isVerticalLineDrawn[horizontalLinePos - (dotsCnt - horizontalLinePos / boxesCnt)] &&
-                                            isVerticalLineDrawn[horizontalLinePos - (dotsCnt - horizontalLinePos / boxesCnt) + 1])
+                                        if (gameBoard.horizontaLineProperties[horizontalLinePos - boxesCnt].isDrawn &&
+                                            gameBoard.verticalLineProperties[horizontalLinePos - (dotsCnt - horizontalLinePos / boxesCnt)].isDrawn &&
+                                            gameBoard.verticalLineProperties[horizontalLinePos - (dotsCnt - horizontalLinePos / boxesCnt) + 1].isDrawn)
                                         {
                                             playerScores[isPlayer2Turn]++;
                                             isBoxClosed = 1;
@@ -76,9 +77,9 @@ int main()
                                     if (horizontalLinePos / boxesCnt < boxesCnt)
                                     {
 
-                                        if (isHorizontalLineDrawn[horizontalLinePos + boxesCnt] &&
-                                            isVerticalLineDrawn[horizontalLinePos + horizontalLinePos / boxesCnt] &&
-                                            isVerticalLineDrawn[horizontalLinePos + horizontalLinePos / boxesCnt + 1])
+                                        if (gameBoard.horizontaLineProperties[horizontalLinePos + boxesCnt].isDrawn &&
+                                            gameBoard.verticalLineProperties[horizontalLinePos + horizontalLinePos / boxesCnt].isDrawn &&
+                                            gameBoard.verticalLineProperties[horizontalLinePos + horizontalLinePos / boxesCnt + 1].isDrawn)
                                         {
                                             playerScores[isPlayer2Turn]++;
                                             isBoxClosed = 1;
@@ -103,7 +104,7 @@ int main()
                 for (int j = 0; j < (boxesCnt + 1); j++)
                 {
                     int vertLinePos = i * (boxesCnt + 1) + j;
-                    if (!isVerticalLineDrawn[vertLinePos])
+                    if (!gameBoard.verticalLineProperties[vertLinePos].isDrawn)
                     {
 
                         if (gameBoard.verticalLineProperties[vertLinePos].contains(xPos, yPos))
@@ -118,13 +119,13 @@ int main()
 
                                 if (gameBoard.verticalLineProperties[vertLinePos].contains(xPos, yPos))
                                 {
-                                    isVerticalLineDrawn[vertLinePos] = 1;
+                                    gameBoard.verticalLineProperties[vertLinePos].isDrawn = 1;
 
                                     if (vertLinePos % dotsCnt)
                                     {
-                                        if (isVerticalLineDrawn[vertLinePos - 1] &&
-                                            isHorizontalLineDrawn[vertLinePos - vertLinePos / dotsCnt - 1] &&
-                                            isHorizontalLineDrawn[vertLinePos - vertLinePos / dotsCnt - 1 + boxesCnt])
+                                        if (gameBoard.verticalLineProperties[vertLinePos - 1].isDrawn &&
+                                            gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt - 1].isDrawn &&
+                                            gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt - 1 + boxesCnt].isDrawn)
                                         {
                                             playerScores[isPlayer2Turn]++;
                                             isBoxClosed = 1;
@@ -133,9 +134,9 @@ int main()
                                     }
                                     if ((vertLinePos + 1) % dotsCnt)
                                     {
-                                        if (isVerticalLineDrawn[vertLinePos + 1] &&
-                                            isHorizontalLineDrawn[vertLinePos - vertLinePos / dotsCnt] &&
-                                            isHorizontalLineDrawn[vertLinePos - vertLinePos / dotsCnt + boxesCnt])
+                                        if (gameBoard.verticalLineProperties[vertLinePos + 1].isDrawn &&
+                                            gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt].isDrawn &&
+                                            gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt + boxesCnt].isDrawn)
                                         {
                                             playerScores[isPlayer2Turn]++;
                                             isBoxClosed = 1;

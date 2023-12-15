@@ -6,7 +6,7 @@ struct Line {
     sf::RectangleShape shape ;
     bool isDrawn ;
 
-    Line(int &xCor,int &yCor,int &xLength,int &yLength) ;
+    Line() ;
 
     bool contains(const int &x,const int &y) ;
     void setSize(const int &xLength,const int &yLength) ;

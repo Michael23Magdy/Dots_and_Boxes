@@ -13,7 +13,7 @@ Board::Board(sf::RenderWindow &window_,int boxesCnt_)
       dotsProperties(dotsCnt * dotsCnt) ,
       dotsDistance(600.0f / boxesCnt + 5)
 {
-
+    // font.loadFromFile("includes/fonts/garamond.ttf");
 }
 
 void Board::initializeBoard()

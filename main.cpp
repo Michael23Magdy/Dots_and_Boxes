@@ -11,7 +11,7 @@ int main()
 {
 
     // Main window
-    sf::RenderWindow window(sf::VideoMode(770, 770), "Dots and boxes", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(1000, 770), "Dots and boxes", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(30) ;
 
     Board gameBoard(window,boxesCnt) ;
@@ -21,7 +21,13 @@ int main()
     bool isPlayer2Turn = false;
     bool isBoxClosed = false;
 
+    sf::Font font ;
+    sf::Text playerOneScoreText ;
+    font.loadFromFile("includes/fonts/garamond.ttf");
 
+    playerOneScoreText.setFont(font);
+    playerOneScoreText.setString("Score : ") ;
+    playerOneScoreText.setPosition(sf::Vector2f()) ;
 
     while (window.isOpen())
     {

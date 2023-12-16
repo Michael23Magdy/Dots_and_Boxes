@@ -75,3 +75,38 @@ void Board::setDotsProberties(){
         }
     }
 }
+void Board::drawHorizontalLines(){
+    for (int i = 0; i < (boxesCnt + 1); i++)
+        for (int j = 0; j < boxesCnt; j++)
+            window.draw(horizontaLineProperties[i * boxesCnt + j].shape);
+}
+void Board::drawVerticalLines(){
+    for (int i = 0; i < boxesCnt; i++)
+        for (int j = 0; j < (boxesCnt + 1); j++)
+            window.draw(verticalLineProperties[i * dotsCnt + j].shape);
+}
+void Board::drawBoxes(){
+    for (int i = 0; i < boxesCnt; i++)
+        for (int j = 0; j < boxesCnt; j++)
+            window.draw(boxesProperties[i * boxesCnt + j]);
+}
+void Board::drawDots(){
+    for (int i = 0; i < dotsCnt; i++)
+        for (int j = 0; j < dotsCnt; j++)
+            window.draw(dotsProperties[i * dotsCnt + j]);
+}
+void Board::drawText(){
+    window.draw(text.PlayerOneScoreText);
+    window.draw(text.PlayerOneName);
+    window.draw(text.PlayerTwoScoreText);
+    window.draw(text.PlayerTwoName);
+}
+void Board::renderBoard(){
+        window.clear(grayColour);
+        drawBoxes();
+        drawHorizontalLines();
+        drawVerticalLines();
+        drawDots() ;
+        drawText() ;
+        window.display();
+}

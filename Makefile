@@ -19,6 +19,7 @@ INCLUDED_FILES = colors.cpp
 INCLUDED_FILES += board.cpp
 INCLUDED_FILES += shapes.cpp
 INCLUDED_FILES += board_text.cpp
+INCLUDED_FILES += game_logic.cpp
 #CXX flags
 CXX_FLAGS := -c
 CXX_FLAGS += -w

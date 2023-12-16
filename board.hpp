@@ -27,7 +27,15 @@ struct Board
     void setHorizontalLinesProberties();
     void setDotsProberties() ;
     void setBoxesProberties() ;
+
+    void drawVerticalLines();
+    void drawHorizontalLines();
+    void drawDots() ;
+    void drawBoxes() ;
+    void drawText();
+
     void initializeBoard() ;
+    void renderBoard() ;
 };
 
 #endif

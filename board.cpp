@@ -80,6 +80,7 @@ void Board::drawHorizontalLines(){
         for (int j = 0; j < boxesCnt; j++)
             window.draw(horizontaLineProperties[i * boxesCnt + j].shape);
 }
+
 void Board::drawVerticalLines(){
     for (int i = 0; i < boxesCnt; i++)
         for (int j = 0; j < (boxesCnt + 1); j++)

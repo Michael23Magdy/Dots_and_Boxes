@@ -1,14 +1,10 @@
-all: compile link run
-
 
 # source file list
-f = main
-CPP_FILES := $(f).cpp
-#CPP_FILES += imp.cpp
+CPP_EXCUTABLE_NAME = Game
+CPP_FILES := main.cpp
 
 # obj files list
-OBJ_FILES := $(f).o
-#OBJ_FILES += imp.o
+OBJ_FILES := main.o
 
 # lib list
 LIB_LIST := -lsfml-graphics
@@ -27,6 +23,6 @@ CXX_FLAGS += -w
 compile:
 	@g++ $(CXX_FLAGS) $(CPP_FILES) 
 link:compile
-	@g++ $(OBJ_FILES) -o $(f) $(LIB_LIST) $(INCLUDED_FILES)
+	@g++ $(OBJ_FILES) -o $(CPP_EXCUTABLE_NAME).exe $(LIB_LIST) $(INCLUDED_FILES)
 run:link
-	./$(f)
+	./$(CPP_EXCUTABLE_NAME).exe

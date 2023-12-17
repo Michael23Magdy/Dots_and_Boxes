@@ -1,6 +1,10 @@
 #include"game_logic.hpp"
 #include"colors.hpp"
 
+enum LineType{
+    horizontalLine ,
+    verticalLine 
+} ;
 
 GameLogic::GameLogic(sf::RenderWindow &window_, int boxesCnt_)
     : window(window_) ,
@@ -18,110 +22,53 @@ GameLogic::GameLogic(sf::RenderWindow &window_, int boxesCnt_)
 }
 
 void GameLogic::checkAndUpdateHorizontalLines(sf::Event &event , int &xPos,int &yPos)   {
-    for (int i = 0; i < (boxesCnt + 1); i++)
-        for (int j = 0; j < boxesCnt ; j++)
-        {
-            int horizontalLinePos = i * boxesCnt  + j;
-
-            if (!gameBoard.horizontaLineProperties[horizontalLinePos].isDrawn)
-            {
-
-                if (gameBoard.horizontaLineProperties[horizontalLinePos].contains(xPos, yPos))
-                    gameBoard.horizontaLineProperties[horizontalLinePos].setColour(playersLinesColours[isPlayer2Turn]);
-                else
-                    gameBoard.horizontaLineProperties[horizontalLinePos].setColour(blackColour);
-
-                if (event.type == sf::Event::MouseButtonPressed)
-                {
-                    if (event.mouseButton.button == sf::Mouse::Left)
-                    {
-
-                        if (gameBoard.horizontaLineProperties[horizontalLinePos].contains(xPos, yPos))
-                        {
-                            gameBoard.horizontaLineProperties[horizontalLinePos].isDrawn = 1;
-                            if (horizontalLinePos / boxesCnt )
-                            {
-                                if (gameBoard.horizontaLineProperties[horizontalLinePos - boxesCnt ].isDrawn &&
-                                    gameBoard.verticalLineProperties[horizontalLinePos - (dotsCnt  - horizontalLinePos / boxesCnt)].isDrawn &&
-                                    gameBoard.verticalLineProperties[horizontalLinePos - (dotsCnt  - horizontalLinePos / boxesCnt) + 1].isDrawn)
-                                {
-                                    playerScores[isPlayer2Turn]++;
-                                    isBoxClosed = 1;
-                                    gameBoard.boxesProperties[horizontalLinePos-boxesCnt].setFillColor(playersBoxessColours[isPlayer2Turn]) ;
-                                }
-                            }
-                            if (horizontalLinePos / boxesCnt < boxesCnt)
-                            {
-
-                                if (gameBoard.horizontaLineProperties[horizontalLinePos + boxesCnt].isDrawn &&
-                                    gameBoard.verticalLineProperties[horizontalLinePos + horizontalLinePos / boxesCnt].isDrawn &&
-                                    gameBoard.verticalLineProperties[horizontalLinePos + horizontalLinePos / boxesCnt + 1].isDrawn)
-                                {
-                                    playerScores[isPlayer2Turn]++;
-                                    isBoxClosed = 1;
-                                    gameBoard.boxesProperties[horizontalLinePos].setFillColor(playersBoxessColours[isPlayer2Turn]) ;
-                                }
-                            }
-                            if (!isBoxClosed)
-                                isPlayer2Turn = !isPlayer2Turn;
-                            else
-                            {
-                                isBoxClosed = 0;
-                                if (!isPlayer2Turn)
-                                    gameBoard.text.PlayerOneScoreText.setString("Score: " + std::to_string(playerScores[0]));
-                                else
-                                    gameBoard.text.PlayerTwoScoreText.setString("Score: " + std::to_string(playerScores[1]));
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    checkAndUpdateLines(event,gameBoard.horizontaLineProperties,xPos,yPos,horizontalLine) ;
     }
-
-
 void GameLogic::checkAndUpdateVerticalLines(sf::Event &event , int &xPos,int &yPos){
-    for (int i = 0; i < boxesCnt; i++)
-        for (int j = 0; j < (boxesCnt + 1); j++)
+    checkAndUpdateLines(event,gameBoard.verticalLineProperties,xPos,yPos,verticalLine) ;
+    }
+
+void GameLogic::checkAndUpdateLines(sf::Event &event ,std::vector<Line> &lineProperties, int &xPos,int &yPos,const int &lineType)  {
+    int linesCntInARow = (lineType == horizontalLine ? boxesCnt : boxesCnt + 1) ;
+    int linesCntInAColumn = (lineType == horizontalLine ? boxesCnt + 1 : boxesCnt) ;
+
+    for (int i = 0; i < linesCntInAColumn; i++)
+        for (int j = 0; j < linesCntInARow; j++)
         {
-            int vertLinePos = i * (boxesCnt + 1) + j;
-            if (!gameBoard.verticalLineProperties[vertLinePos].isDrawn)
+            int linePos = i * (linesCntInARow) + j;
+            if (!lineProperties[linePos].isDrawn)
             {
 
-                if (gameBoard.verticalLineProperties[vertLinePos].contains(xPos, yPos))
-                    gameBoard.verticalLineProperties[vertLinePos].setColour(playersLinesColours[isPlayer2Turn]);
+                if (lineProperties[linePos].contains(xPos, yPos))
+                    lineProperties[linePos].setColour(playersLinesColours[isPlayer2Turn]);
                 else
-                    gameBoard.verticalLineProperties[vertLinePos].setColour(blackColour);
+                    lineProperties[linePos].setColour(blackColour);
 
                 if (event.type == sf::Event::MouseButtonPressed)
                 {
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
 
-                        if (gameBoard.verticalLineProperties[vertLinePos].contains(xPos, yPos))
+                        if (lineProperties[linePos].contains(xPos, yPos))
                         {
-                            gameBoard.verticalLineProperties[vertLinePos].isDrawn = 1;
+                            lineProperties[linePos].isDrawn = 1;
 
-                            if (vertLinePos % dotsCnt)
+                            if (lineType == horizontalLine) 
+                                linePos = linePos + linePos/boxesCnt ;
+                                
+                            for (int i = 0; i < 2; i++)
                             {
-                                if (gameBoard.verticalLineProperties[vertLinePos - 1].isDrawn &&
-                                    gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt - 1].isDrawn &&
-                                    gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt - 1 + boxesCnt].isDrawn)
+                                int tmplinePos = linePos - (lineType == horizontalLine ? i*dotsCnt : i) ;
+                                if ((tmplinePos + 1) % dotsCnt == 0
+                                    ||tmplinePos >= dotsCnt*boxesCnt ) continue;
+                                if (gameBoard.verticalLineProperties[tmplinePos].isDrawn &&
+                                    gameBoard.verticalLineProperties[tmplinePos + 1].isDrawn &&
+                                    gameBoard.horizontaLineProperties[tmplinePos - tmplinePos / dotsCnt].isDrawn &&
+                                    gameBoard.horizontaLineProperties[tmplinePos - tmplinePos / dotsCnt + boxesCnt].isDrawn)
                                 {
                                     playerScores[isPlayer2Turn]++;
                                     isBoxClosed = 1;
-                                    gameBoard.boxesProperties[vertLinePos - vertLinePos / dotsCnt - 1].setFillColor(playersBoxessColours[isPlayer2Turn]) ;
-                                }
-                            }
-                            if ((vertLinePos + 1) % dotsCnt)
-                            {
-                                if (gameBoard.verticalLineProperties[vertLinePos + 1].isDrawn &&
-                                    gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt].isDrawn &&
-                                    gameBoard.horizontaLineProperties[vertLinePos - vertLinePos / dotsCnt + boxesCnt].isDrawn)
-                                {
-                                    playerScores[isPlayer2Turn]++;
-                                    isBoxClosed = 1;
-                                    gameBoard.boxesProperties[vertLinePos - vertLinePos / dotsCnt].setFillColor(playersBoxessColours[isPlayer2Turn]) ;  
+                                    gameBoard.boxesProperties[tmplinePos - tmplinePos / dotsCnt].setFillColor(playersBoxessColours[isPlayer2Turn]) ;  
                                 }
                             }
                             if (!isBoxClosed)
@@ -138,10 +85,8 @@ void GameLogic::checkAndUpdateVerticalLines(sf::Event &event , int &xPos,int &yP
                     }
                 }
             }
-
         }
     }
-
 void GameLogic::run(){
     while (window.isOpen())
     {
